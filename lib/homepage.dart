@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Stack(
         children: [
-          WeatherBg(weatherType: WeatherType.sunny,width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,),
+          WeatherBg(weatherType: WeatherType.lightRainy,width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 0.1, sigmaY: 0.1),
             child: ListView(
