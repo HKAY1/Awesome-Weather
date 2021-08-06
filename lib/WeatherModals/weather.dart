@@ -1,8 +1,7 @@
 class Weather {
   final double? temp;
   final double? feelsLike;
-  final double? low;
-  final double? high;
+  final double? uviIndex;
   final String? description;
   final double? pressure;
   final double? humidity;
@@ -13,8 +12,7 @@ class Weather {
   Weather(
       {this.temp,
       this.feelsLike,
-      this.low,
-      this.high,
+      this.uviIndex,
       this.description,
       this.pressure,
       this.humidity,
@@ -23,17 +21,16 @@ class Weather {
       this.rain});
 
   factory Weather.fromJson(Map<String, dynamic> json) {
-    print(json);
     return Weather(
-        temp: json['main']['temp'].toDouble(),
-        feelsLike: json['main']['feels_like'].toDouble(),
-        low: json['main']['temp_min'].toDouble(),
-        high: json['main']['temp_max'].toDouble(),
-        description: json['weather'][0]['description'],
-        pressure: json['main']['pressure'].toDouble(),
-        humidity: json['main']['humidity'].toDouble(),
-        wind: json['wind']['speed'].toDouble(),
-        icon: json['weather'][0]['icon'],
-        rain: json['clouds']['all'].toDouble());
+      temp: json['current']['temp'].toDouble(),
+      feelsLike: json['current']['feels_like'].toDouble(),
+      description: json['current']['weather'][0]['description'],
+      uviIndex: json['current']['uvi'].toDouble(),
+      pressure: json['current']['pressure'].toDouble(),
+      humidity: json['current']['humidity'].toDouble(),
+      wind: json['current']['wind_speed'].toDouble(),
+      icon: json['current']['weather'][0]['icon'],
+      rain: json['current']['clouds'].toDouble(),
+    );
   }
 }
