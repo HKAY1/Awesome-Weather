@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
@@ -14,6 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //static AudioCache player = AudioCache(prefix: 'assets/audio/');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,10 @@ class _MyHomePageState extends State<MyHomePage> {
               focusColor: Colors.transparent,
               splashColor: Colors.blue[200],
               hoverColor: Colors.transparent,
-              onPressed: () => print('object'),
+              onPressed: () {
+                final player = AudioCache(prefix: 'assests/audio');
+                player.loop('heavy-rain.mp3');
+              },
               icon: Icon(Icons.search_rounded),
             ),
           )
@@ -70,10 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: [
           Container(
-            child: Text(
-              'data',
-              style: TextStyle(fontSize: 30),
-            ),
             height: double.infinity,
             width: double.infinity,
             decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CurrentWeather extends StatefulWidget {
   CurrentWeather({Key? key}) : super(key: key);
@@ -38,11 +39,9 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                 ),
                 SizedBox(width: 20),
                 Text(
-                  '28\u00B0',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 100,
-                  ),
+                  '33\u00B0',
+                  style: GoogleFonts.roboto(
+                      textStyle: TextStyle(fontSize: 100, color: Colors.white)),
                 ),
               ],
             ),

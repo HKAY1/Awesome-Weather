@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'homepage.dart';
 
@@ -20,6 +21,8 @@ class _MyAppState extends State<MyApp> {
         title: 'Awesome Weather',
         home: MyHomePage(),
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blue));
+        theme: ThemeData(
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)));
   }
 }
