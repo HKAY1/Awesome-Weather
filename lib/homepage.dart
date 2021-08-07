@@ -6,6 +6,7 @@ import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
 import 'package:awesomeweather/UI/hourlyForcast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -74,15 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Stack(
         children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.blueAccent, Colors.purpleAccent],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter),
-            ),
+          WeatherBg(
+            weatherType: WeatherType.lightRainy,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
           ),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 0.1, sigmaY: 0.1),
