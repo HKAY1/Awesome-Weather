@@ -1,25 +1,32 @@
+import 'package:awesomeweather/Bloc/weather_bloc.dart';
+import 'package:awesomeweather/weatherRepo.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'bloc_observer.dart';
 import 'homepage.dart';
 
-void main() {
+void main() async {
+  Bloc.observer = WeatherBlocObserver();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: HydratedStorage.webStorageDirectory);
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Awesome Weather',
-        home: MyHomePage(),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blue));
+    return RepositoryProvider.value(
+      value: WeatherRepo,
+      child: BlocProvider(
+        create: (_) => WeatherBloc(WeatherRepo()),
+        child: MaterialApp(
+            title: 'Awesome Weather',
+            home: MyHomePage(),
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(primarySwatch: Colors.blue)),
+      ),
+    );
   }
 }

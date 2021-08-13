@@ -1,13 +1,11 @@
+import 'package:awesomeweather/UI/weatherconverter.dart';
+import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:flutter/material.dart';
 
-class HourlyForcast extends StatefulWidget {
-  HourlyForcast({Key? key}) : super(key: key);
+class HourlyForecast extends StatelessWidget {
+  const HourlyForecast({Key? key, required this.hourly}) : super(key: key);
+  final List<Current> hourly;
 
-  @override
-  _HourlyForcastState createState() => _HourlyForcastState();
-}
-
-class _HourlyForcastState extends State<HourlyForcast> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +29,7 @@ class _HourlyForcastState extends State<HourlyForcast> {
               padding: EdgeInsets.only(left: 10, right: 10),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: 7,
+              itemCount: hourly.length,
               itemBuilder: (context, item) => Container(
                 margin: EdgeInsets.all(20),
                 width: MediaQuery.of(context).size.width * 0.12,
@@ -39,7 +37,7 @@ class _HourlyForcastState extends State<HourlyForcast> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '$item PM',
+                      getTime(timestamp: hourly[item].dt, format: 'hh:m a'),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -53,7 +51,7 @@ class _HourlyForcastState extends State<HourlyForcast> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      '60%',
+                      converter(hourly[item].temp),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,

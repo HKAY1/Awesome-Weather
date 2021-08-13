@@ -1,17 +1,37 @@
+import 'dart:convert';
+
+List<Location> locationFromJson(String str) =>
+    List<Location>.from(json.decode(str).map((x) => Location.fromJson(x)));
+
+String locationToJson(List<Location> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Location {
-  final String? city;
-  final String? country;
-  final String? lat;
-  final String? lon;
+  Location({
+    required this.name,
+    required this.lat,
+    required this.lon,
+    required this.country,
+  });
 
-  Location({this.city, this.country, this.lat, this.lon});
+  String name;
+  double lat;
+  double lon;
+  String country;
 
-  factory Location.fromjson(Map<String, dynamic> json) {
-    return Location(
-      city: json[0]['name'],
-      country: json[0]['country'],
-      lat: json[0]['lat'],
-      lon: json[0]['lon'],
-    );
-  }
+  double get() => lat;
+
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+        name: json["name"],
+        lat: json["lat"].toDouble(),
+        lon: json["lon"].toDouble(),
+        country: json["country"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "lat": lat,
+        "lon": lon,
+        "country": country,
+      };
 }
