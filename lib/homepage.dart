@@ -1,6 +1,6 @@
 import 'dart:ui';
-
-import 'package:audioplayers/audioplayers.dart';
+import 'package:awesomeweather/search.dart';
+import 'package:awesomeweather/weatherEffects.dart';
 import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
@@ -16,11 +16,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //static AudioCache player = AudioCache(prefix: 'assets/audio/');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
         title: Text('Awesome Weather'),
@@ -33,8 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
               splashColor: Colors.blue[200],
               hoverColor: Colors.transparent,
               onPressed: () {
-                final player = AudioCache(prefix: 'assests/audio');
-                player.loop('heavy-rain.mp3');
+                showSearch(context: context, delegate: WeatherSearch());
               },
               icon: Icon(Icons.search_rounded),
             ),
@@ -44,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomSheet: Container(
         padding: EdgeInsets.only(left: 20, right: 3),
         decoration: BoxDecoration(
-          color: Colors.purpleAccent,
+          color: Colors.blueAccent,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(width: 5),
             IconButton(
               color: Colors.white,
-              onPressed: () => print('object'),
+              onPressed: () => WeatherEffects("heavy-rain"),
               icon: Icon(Icons.refresh),
             )
           ],

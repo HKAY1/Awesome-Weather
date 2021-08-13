@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CurrentWeather extends StatefulWidget {
   CurrentWeather({Key? key}) : super(key: key);
-
   @override
   _CurrentWeatherState createState() => _CurrentWeatherState();
 }
@@ -15,7 +14,7 @@ class _CurrentWeatherState extends State<CurrentWeather> {
       child: Column(
         children: [
           Text(
-            'Camp',
+            'Delhi',
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
