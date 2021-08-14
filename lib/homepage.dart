@@ -7,6 +7,7 @@ import 'package:awesomeweather/UI/hourlyForcast.dart';
 import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:awesomeweather/WeatherModals/locations.dart';
 import 'package:awesomeweather/search.dart';
+import 'package:awesomeweather/weatherEffects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
@@ -211,7 +212,7 @@ class Awesome extends StatelessWidget {
                       SizedBox(width: 5),
                       IconButton(
                         color: Colors.white,
-                        onPressed: () => print('object'),
+                        onPressed: () => WeatherEffects("heavy-rain"),
                         icon: Icon(Icons.refresh),
                       )
                     ],
