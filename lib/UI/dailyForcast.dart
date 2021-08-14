@@ -1,13 +1,11 @@
+import 'package:awesomeweather/UI/weatherconverter.dart';
+import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:flutter/material.dart';
 
-class DailyForcast extends StatefulWidget {
-  DailyForcast({Key? key}) : super(key: key);
+class DailyForecast extends StatelessWidget {
+  const DailyForecast({Key? key, required this.daily}) : super(key: key);
+  final List<Daily> daily;
 
-  @override
-  _DailyForcastState createState() => _DailyForcastState();
-}
-
-class _DailyForcastState extends State<DailyForcast> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +29,7 @@ class _DailyForcastState extends State<DailyForcast> {
               padding: EdgeInsets.only(left: 10, right: 10),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: 7,
+              itemCount: daily.length,
               itemBuilder: (context, item) => Container(
                 margin: EdgeInsets.all(20),
                 width: MediaQuery.of(context).size.width * 0.12,
@@ -39,7 +37,7 @@ class _DailyForcastState extends State<DailyForcast> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '$item PM',
+                      getDate(timestamp: daily[item].dt, format: 'EEE d'),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -53,7 +51,7 @@ class _DailyForcastState extends State<DailyForcast> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      '60%',
+                      converter(daily[item].temp.max),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,

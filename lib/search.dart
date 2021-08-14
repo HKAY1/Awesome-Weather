@@ -1,15 +1,142 @@
-import 'dart:ui';
-
 import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
 import 'package:awesomeweather/UI/hourlyForcast.dart';
+import 'package:awesomeweather/WeatherModals/forcast.dart';
+import 'package:awesomeweather/WeatherModals/locations.dart';
+import 'package:awesomeweather/Bloc/bloc.dart';
+import 'package:awesomeweather/Bloc/weather_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg_null_safety/bg/weather_bg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:glassmorphism/glassmorphism.dart';
 
-class WeatherSearch extends SearchDelegate<String> {
+class SearchLoading extends StatelessWidget {
+  const SearchLoading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class SearchError extends StatelessWidget {
+  const SearchError({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        child: Text(
+          'Something Went Wrong ',
+          style: TextStyle(color: Colors.purple, fontSize: 40),
+        ),
+      ),
+    );
+  }
+}
+
+class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key, required this.forecast, required this.location})
+      : super(key: key);
+
+  final Forecast forecast;
+  final Location location;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        WeatherBg(
+          weatherType: WeatherType.cloudyNight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+        ),
+        Column(
+          children: [
+            Expanded(
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                padding:
+                    EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 50),
+                children: [
+                  CurrentWeather(
+                    forecast: forecast,
+                    location: location,
+                  ),
+                  Divider(
+                    color: Colors.white60,
+                    height: 10,
+                    thickness: 1,
+                  ),
+                  HourlyForecast(hourly: forecast.hourly),
+                  Divider(
+                    color: Colors.white60,
+                    height: 50,
+                    thickness: 1,
+                  ),
+                  DailyForecast(daily: forecast.daily),
+                  Divider(
+                    color: Colors.white60,
+                    height: 50,
+                    thickness: 1,
+                  ),
+                  Details(details: forecast)
+                ],
+              ),
+            ),
+            GlassmorphicContainer(
+              linearGradient:
+                  LinearGradient(colors: [Colors.white30, Colors.white30]),
+              borderGradient:
+                  LinearGradient(colors: [Colors.white30, Colors.white30]),
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              blur: 20,
+              borderRadius: 0,
+              border: 0,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Open Weather Map',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              'Updated 20/07 8:30 pm',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      IconButton(
+                        color: Colors.white,
+                        onPressed: () => print('object'),
+                        icon: Icon(Icons.refresh),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class Search extends SearchDelegate<String> {
   final cities = [
     'Delhi',
     'Kolkata',
@@ -36,14 +163,10 @@ class WeatherSearch extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) => [
         IconButton(
           onPressed: () {
-            if (query.isEmpty) {
-              close(context, '');
-            } else {
-              query = '';
-              showSuggestions(context);
-            }
+            context.read<WeatherBloc>().add(GetWeather(query));
+            showResults(context);
           },
-          icon: Icon(Icons.clear),
+          icon: Icon(Icons.search),
         )
       ];
 
@@ -55,47 +178,20 @@ class WeatherSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blueAccent,
-      ),
-      child: Stack(
-        children: [
-          WeatherBg(
-            weatherType: WeatherType.lightRainy,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          ),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 0.1, sigmaY: 0.1),
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              padding:
-                  EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 50),
-              children: [
-                CurrentWeather(),
-                Divider(
-                  color: Colors.white60,
-                  height: 10,
-                  thickness: 1,
-                ),
-                HourlyForcast(),
-                Divider(
-                  color: Colors.white60,
-                  height: 50,
-                  thickness: 1,
-                ),
-                DailyForcast(),
-                Divider(
-                  color: Colors.white60,
-                  height: 50,
-                  thickness: 1,
-                ),
-                Details()
-              ],
-            ),
-          )
-        ],
+    return Scaffold(
+      body: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
+          if (state is WeatherLoading) {
+            return SearchLoading();
+          } else if (state is WeatherLoaded) {
+            return SearchPage(
+              forecast: state.forecast,
+              location: state.location,
+            );
+          } else {
+            return SearchError();
+          }
+        },
       ),
     );
   }
@@ -128,6 +224,7 @@ class WeatherSearch extends SearchDelegate<String> {
                 tileColor: Colors.transparent,
                 onTap: () {
                   query = suggestion;
+                  context.read<WeatherBloc>().add(GetWeather(query));
                   showResults(context);
                 },
                 leading: Icon(Icons.location_city, color: Colors.white),

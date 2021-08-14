@@ -1,26 +1,27 @@
+import 'package:awesomeweather/WeatherModals/forcast.dart';
+import 'package:awesomeweather/WeatherModals/locations.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'weatherconverter.dart';
 
-class CurrentWeather extends StatefulWidget {
-  CurrentWeather({Key? key}) : super(key: key);
-  @override
-  _CurrentWeatherState createState() => _CurrentWeatherState();
-}
-
-class _CurrentWeatherState extends State<CurrentWeather> {
+class CurrentWeather extends StatelessWidget {
+  const CurrentWeather(
+      {Key? key, required this.forecast, required this.location})
+      : super(key: key);
+  final Forecast forecast;
+  final Location location;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
           Text(
-            'Delhi',
+            location.name,
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
           SizedBox(height: 5),
           Text(
-            'Sat 31 Jul 2021',
+            getDate(timestamp: forecast.current.dt, format: 'MMMMEEEEd'),
             style: TextStyle(
               color: Colors.white60,
               fontWeight: FontWeight.w300,
@@ -31,16 +32,12 @@ class _CurrentWeatherState extends State<CurrentWeather> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.cloud,
-                  color: Colors.white,
-                  size: 100,
-                ),
-                SizedBox(width: 20),
                 Text(
-                  '33\u00B0',
-                  style: GoogleFonts.roboto(
-                      textStyle: TextStyle(fontSize: 100, color: Colors.white)),
+                  converter(forecast.current.temp),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 80,
+                  ),
                 ),
               ],
             ),
@@ -51,9 +48,10 @@ class _CurrentWeatherState extends State<CurrentWeather> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '31\u00B0 / 26\u00B0',
+                  minmaxtem(
+                      forecast.daily[0].temp.min, forecast.daily[0].temp.max),
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w300),
+                      color: Colors.white70, fontWeight: FontWeight.w300),
                 ),
                 VerticalDivider(
                   thickness: 1,
@@ -61,9 +59,9 @@ class _CurrentWeatherState extends State<CurrentWeather> {
                   color: Colors.white60,
                 ),
                 Text(
-                  'Real Feel 30\u00B0',
+                  converter(forecast.current.feelsLike),
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w300),
+                      color: Colors.white70, fontWeight: FontWeight.w300),
                 )
               ],
             ),
@@ -71,11 +69,9 @@ class _CurrentWeatherState extends State<CurrentWeather> {
           Container(
             margin: EdgeInsets.only(top: 30, bottom: 30),
             child: Text(
-              'Cloudy',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 20),
+              forecast.current.weather.elementAt(0).description.toUpperCase(),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
             ),
           )
         ],
