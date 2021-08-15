@@ -1,6 +1,8 @@
 import 'package:awesomeweather/Bloc/weather_bloc.dart';
 import 'package:awesomeweather/weatherRepo.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'bloc_observer.dart';
@@ -20,13 +22,16 @@ class MyApp extends StatelessWidget {
     return RepositoryProvider.value(
       value: WeatherRepo,
       child: BlocProvider(
-        create: (_) => WeatherBloc(WeatherRepo()),
-        child: MaterialApp(
+          create: (_) => WeatherBloc(WeatherRepo()),
+          child: MaterialApp(
             title: 'Awesome Weather',
             home: MyHomePage(),
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(primarySwatch: Colors.blue)),
-      ),
+            theme: ThemeData(
+                primarySwatch: Colors.blue,
+                textTheme:
+                    GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
+          )),
     );
   }
 }
