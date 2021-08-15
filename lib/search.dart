@@ -164,9 +164,9 @@ class Search extends SearchDelegate<String> {
         IconButton(
           onPressed: () {
             context.read<WeatherBloc>().add(GetWeather(query));
-            showResults(context);
+            close(context, '');
           },
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.search_rounded),
         )
       ];
 
@@ -178,8 +178,8 @@ class Search extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<WeatherBloc, WeatherState>(
+    return Container(
+      child: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state is WeatherLoading) {
             return SearchLoading();
@@ -225,7 +225,7 @@ class Search extends SearchDelegate<String> {
                 onTap: () {
                   query = suggestion;
                   context.read<WeatherBloc>().add(GetWeather(query));
-                  showResults(context);
+                  close(context, '');
                 },
                 leading: Icon(Icons.location_city, color: Colors.white),
                 title: Text(suggestion),
