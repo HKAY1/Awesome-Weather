@@ -24,12 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^2.1.0
-  just_audio: ^0.9.5
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-
   cupertino_icons: ^1.0.2
   http: ^0.13.3
   flutter_weather_bg_null_safety: ^1.0.0
@@ -40,6 +34,8 @@ dependencies:
   json_annotation: ^4.1.0
   pull_to_refresh: ^2.0.0
   path_provider: ^2.0.2
+
+
   
 dev_dependencies:
   flutter_test:
@@ -58,10 +54,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - audio/heavy-rain.mp3
-  - audio/sunny.mp3
-  - images/weather.png
-
+  - Assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
