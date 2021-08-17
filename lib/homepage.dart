@@ -8,6 +8,8 @@ import 'package:awesomeweather/UI/search0.2.dart';
 import 'package:awesomeweather/UI/weather_viewer.dart';
 import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:awesomeweather/WeatherModals/locations.dart';
+import 'package:awesomeweather/search.dart';
+import 'package:awesomeweather/weatherEffects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
