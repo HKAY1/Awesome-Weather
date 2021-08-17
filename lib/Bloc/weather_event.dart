@@ -20,12 +20,13 @@ class GetWeather extends WeatherEvent {
 }
 
 class ResetWeather extends WeatherEvent {
+  final String city;
   // final int update;
 
   // Equatable allows for a simple value equality in Dart.
   // All you need to do is to pass the class fields to the super constructor.
-  ResetWeather(/*this.update*/) : super([/*update*/]);
+  ResetWeather(/*this.update*/ this.city) : super([/*update*/ city]);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [city];
 }
