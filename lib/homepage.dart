@@ -32,7 +32,7 @@ class MyHomePage extends StatelessWidget {
               location: state.location,
             );
           } else {
-            return ErrorWeather();
+            return WeatherSearch();
           }
         },
       ),
@@ -139,8 +139,13 @@ class Awesome extends StatelessWidget {
                       focusColor: Colors.transparent,
                       splashColor: Colors.blue[200],
                       hoverColor: Colors.transparent,
-                      onPressed: () =>
-                          showSearch(context: context, delegate: Search()),
+                      onPressed: () async {
+                        String? city = await showSearch(
+                            context: context, delegate: Search());
+                        context
+                            .read<WeatherBloc>()
+                            .add(GetWeather(city ?? 'Delhi'));
+                      },
                       icon: Icon(Icons.search_rounded),
                     ),
                   )
