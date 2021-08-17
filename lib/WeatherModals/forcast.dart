@@ -68,7 +68,7 @@ class Current {
         // sunset: json["sunset"],
         temp: json["temp"].toDouble(),
         feelsLike: json["feels_like"].toDouble(),
-        pressure: json["pressure"],
+        pressure: json["pressure"].toDouble(),
         humidity: json["humidity"].toInt(),
         uvi: json["uvi"].toDouble(),
         clouds: json["clouds"].toInt(),

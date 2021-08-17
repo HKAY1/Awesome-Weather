@@ -48,6 +48,11 @@ class WeatherBloc extends HydratedBloc<WeatherEvent, WeatherState> {
         print(error);
         yield WeatherError();
       }
-    } else if (event is ResetWeather) {}
+    } else if (event is ResetWeather) {
+      yield WeatherLoading();
+      Location location = await weatherRepo.getCurrentLatandLon(event.city);
+      Forecast weatherForecast = await weatherRepo.getCurrentForcast(location);
+      yield WeatherLoaded(weatherForecast, location);
+    }
   }
 }
