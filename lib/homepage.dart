@@ -4,6 +4,7 @@ import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
 import 'package:awesomeweather/UI/hourlyForcast.dart';
+import 'package:awesomeweather/UI/search0.2.dart';
 import 'package:awesomeweather/UI/weather_viewer.dart';
 import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:awesomeweather/WeatherModals/locations.dart';
@@ -137,8 +138,18 @@ class Awesome extends StatelessWidget {
                       focusColor: Colors.transparent,
                       splashColor: Colors.blue[200],
                       hoverColor: Colors.transparent,
-                      onPressed: () => print('object'),
-                      // showSearch(context: context, delegate: Search()),
+                      onPressed: () async {
+                        String city = await showSearch(
+                                query: location.name,
+                                context: context,
+                                delegate: Search2()) ??
+                            location.name;
+                        if (city.isEmpty) {
+                          city = location.name;
+                        }
+                        print(city);
+                        context.read<WeatherBloc>().add(GetWeather(city));
+                      },
                       icon: Icon(Icons.search_rounded),
                     ),
                   )
@@ -182,48 +193,39 @@ class Awesome extends StatelessWidget {
                 ),
               ),
             ),
-            // GlassmorphicContainer(
-            //   linearGradient:
-            //       LinearGradient(colors: [Colors.white30, Colors.white30]),
-            //   borderGradient:
-            //       LinearGradient(colors: [Colors.white30, Colors.white30]),
-            //   width: MediaQuery.of(context).size.width,
-            //   height: 50,
-            //   blur: 20,
-            //   borderRadius: 0,
-            //   border: 0,
-            //   child: Center(
-            //     child: Padding(
-            //       padding: const EdgeInsets.only(left: 20, right: 10),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Expanded(
-            //             child: Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 Text(
-            //                   'Open Weather Map',
-            //                   style: TextStyle(color: Colors.white),
-            //                 ),
-            //                 Text(
-            //                   'Updated 20/07 8:30 pm',
-            //                   style: TextStyle(color: Colors.white),
-            //                 )
-            //               ],
-            //             ),
-            //           ),
-            //           SizedBox(width: 5),
-            //           IconButton(
-            //             color: Colors.white,
-            //             onPressed: () => print('object'),
-            //             icon: Icon(Icons.refresh),
-            //           )
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Open Weather Map',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            'Updated 20/07 8:30 pm',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    IconButton(
+                      color: Colors.white,
+                      onPressed: () => context
+                          .read<WeatherBloc>()
+                          .add(ResetWeather(location.name)),
+                      icon: Icon(Icons.refresh),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ],
