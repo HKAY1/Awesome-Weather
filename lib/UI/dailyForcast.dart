@@ -45,11 +45,7 @@ class DailyForecast extends StatelessWidget {
                           fontSize: 13),
                     ),
                     SizedBox(height: 20),
-                    Icon(
-                      Icons.cloud,
-                      color: Colors.white,
-                      size: 40,
-                    ),
+                    Image.asset("images/windy.gif"),
                     SizedBox(height: 20),
                     Text(
                       converter(daily[item].temp.max),

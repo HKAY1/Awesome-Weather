@@ -4,10 +4,10 @@ import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
 import 'package:awesomeweather/UI/hourlyForcast.dart';
+import 'package:awesomeweather/UI/search0.2.dart';
 import 'package:awesomeweather/UI/weather_viewer.dart';
 import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:awesomeweather/WeatherModals/locations.dart';
-import 'package:awesomeweather/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
@@ -138,11 +138,14 @@ class Awesome extends StatelessWidget {
                     splashColor: Colors.blue[200],
                     hoverColor: Colors.transparent,
                     onPressed: () async {
-                      String? city = await showSearch(
-                          context: context, delegate: Search());
-                      context
-                          .read<WeatherBloc>()
-                          .add(GetWeather(city ?? 'Delhi'));
+                      String city = await showSearch(
+                              context: context, delegate: Search2()) ??
+                          location.name;
+                      if (city.isEmpty) {
+                        city = location.name;
+                      }
+                      print(city);
+                      context.read<WeatherBloc>().add(GetWeather(city));
                     },
                     icon: Icon(Icons.search_rounded),
                   ),

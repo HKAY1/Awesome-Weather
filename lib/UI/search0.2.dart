@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Search extends SearchDelegate<String> {
+class Search2 extends SearchDelegate<String> {
   final cities = [
     'Delhi',
     'Kolkata',
@@ -37,7 +37,6 @@ class Search extends SearchDelegate<String> {
   Widget buildLeading(BuildContext context) => IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          query = 'delhi';
           close(context, query);
         },
       );
@@ -47,7 +46,9 @@ class Search extends SearchDelegate<String> {
   }
 
   @override
-  Widget buildResults(BuildContext context) => Container();
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -67,8 +68,6 @@ class Search extends SearchDelegate<String> {
         Container(
             decoration: BoxDecoration(
           color: Colors.black87,
-          //image: DecorationImage(
-          //image: AssetImage("images/weather.png"), fit: BoxFit.cover)),
         )),
         ListView.builder(
             itemCount: suggestions.length,
