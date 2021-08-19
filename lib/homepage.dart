@@ -68,16 +68,23 @@ class WeatherSearch extends StatelessWidget {
               ),
               SizedBox(height: 40),
               TextField(
+                textAlign: TextAlign.center,
+                cursorColor: Colors.cyanAccent,
+                cursorRadius: Radius.circular(5),
+                cursorWidth: 4,
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 controller: text,
+                cursorHeight: 25,
                 onSubmitted: (text) =>
                     context.read<WeatherBloc>().add(GetWeather(text)),
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
@@ -115,8 +122,7 @@ class Awesome extends StatelessWidget {
     return Stack(
       children: [
         WeatherBg(
-          weatherType: weatherViewer['${forecast.hourly[0].weather[0].icon}']!
-              .weatherType,
+          weatherType: WeatherViewe.weatherType(forecast.hourly[0].weather[0]),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
         ),
@@ -140,12 +146,12 @@ class Awesome extends StatelessWidget {
                       hoverColor: Colors.transparent,
                       onPressed: () async {
                         String city = await showSearch(
-                                query: location.name,
+                                // query: location.name,s
                                 context: context,
                                 delegate: Search2()) ??
                             location.name;
-                        if (city.isEmpty) {
-                          city = location.name;
+                        if (city.isEmpty || (location.name == city)) {
+                          return;
                         }
                         print(city);
                         context.read<WeatherBloc>().add(GetWeather(city));
