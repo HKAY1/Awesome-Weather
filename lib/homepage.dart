@@ -68,16 +68,23 @@ class WeatherSearch extends StatelessWidget {
               ),
               SizedBox(height: 40),
               TextField(
+                textAlign: TextAlign.center,
+                cursorColor: Colors.cyanAccent,
+                cursorRadius: Radius.circular(5),
+                cursorWidth: 4,
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 controller: text,
+                cursorHeight: 25,
                 onSubmitted: (text) =>
                     context.read<WeatherBloc>().add(GetWeather(text)),
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
@@ -115,115 +122,118 @@ class Awesome extends StatelessWidget {
     return Stack(
       children: [
         WeatherBg(
-          weatherType: weatherViewer['${forecast.hourly[0].weather[0].icon}']!
-              .weatherType,
+          weatherType: WeatherViewe.weatherType(forecast.hourly[0].weather[0]),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
         ),
-        Column(children: [
-          Container(
-            child: AppBar(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50))),
-              elevation: 0,
-              title: Text('Awesome Weather'),
-              backgroundColor: Colors.transparent,
-              actions: [
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: IconButton(
-                    focusColor: Colors.transparent,
-                    splashColor: Colors.blue[200],
-                    hoverColor: Colors.transparent,
-                    onPressed: () async {
-                      String city = await showSearch(
-                              context: context, delegate: Search2()) ??
-                          location.name;
-                      if (city.isEmpty) {
-                        city = location.name;
-                      }
-                      print(city);
-                      context.read<WeatherBloc>().add(GetWeather(city));
-                    },
-                    icon: Icon(Icons.search_rounded),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: SmartRefresher(
-              controller: _refreshController,
-              onRefresh: () {
-                context.read<WeatherBloc>().add(ResetWeather(location.name));
-              },
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                padding:
-                    EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 50),
-                children: [
-                  CurrentWeather(
-                    forecast: forecast,
-                    location: location,
-                  ),
-                  Divider(
-                    color: Colors.white60,
-                    height: 10,
-                    thickness: 1,
-                  ),
-                  HourlyForecast(hourly: forecast.hourly),
-                  Divider(
-                    color: Colors.white60,
-                    height: 50,
-                    thickness: 1,
-                  ),
-                  DailyForecast(daily: forecast.daily),
-                  Divider(
-                    color: Colors.white60,
-                    height: 50,
-                    thickness: 1,
-                  ),
-                  Details(details: forecast)
-                ],
-              ),
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Open Weather Map',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          'Updated 20/07 8:30 pm',
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
+        Column(
+          children: [
+            Container(
+              child: AppBar(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(50))),
+                elevation: 0,
+                title: Text('Awesome Weather'),
+                backgroundColor: Colors.transparent,
+                actions: [
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: IconButton(
+                      focusColor: Colors.transparent,
+                      splashColor: Colors.blue[200],
+                      hoverColor: Colors.transparent,
+                      onPressed: () async {
+                        String city = await showSearch(
+                                // query: location.name,s
+                                context: context,
+                                delegate: Search2()) ??
+                            location.name;
+                        if (city.isEmpty || (location.name == city)) {
+                          return;
+                        }
+                        print(city);
+                        context.read<WeatherBloc>().add(GetWeather(city));
+                      },
+                      icon: Icon(Icons.search_rounded),
                     ),
-                  ),
-                  SizedBox(width: 5),
-                  IconButton(
-                    color: Colors.white,
-                    onPressed: () => context
-                        .read<WeatherBloc>()
-                        .add(ResetWeather(location.name)),
-                    icon: Icon(Icons.refresh),
                   )
                 ],
               ),
             ),
-          ),
-        ])
+            Expanded(
+              child: SmartRefresher(
+                controller: _refreshController,
+                onRefresh: () {
+                  context.read<WeatherBloc>().add(ResetWeather(location.name));
+                },
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
+                  padding:
+                      EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 50),
+                  children: [
+                    CurrentWeather(
+                      forecast: forecast,
+                      location: location,
+                    ),
+                    Divider(
+                      color: Colors.white60,
+                      height: 10,
+                      thickness: 1,
+                    ),
+                    HourlyForecast(hourly: forecast.hourly),
+                    Divider(
+                      color: Colors.white60,
+                      height: 50,
+                      thickness: 1,
+                    ),
+                    DailyForecast(daily: forecast.daily),
+                    Divider(
+                      color: Colors.white60,
+                      height: 50,
+                      thickness: 1,
+                    ),
+                    Details(details: forecast)
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Open Weather Map',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            'Updated 20/07 8:30 pm',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    IconButton(
+                      color: Colors.white,
+                      onPressed: () => context
+                          .read<WeatherBloc>()
+                          .add(ResetWeather(location.name)),
+                      icon: Icon(Icons.refresh),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
