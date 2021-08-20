@@ -4,19 +4,18 @@ import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
 import 'package:awesomeweather/UI/hourlyForcast.dart';
+import 'package:awesomeweather/UI/search0.2.dart';
+import 'package:awesomeweather/UI/weather_viewer.dart';
 import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:awesomeweather/WeatherModals/locations.dart';
-import 'package:awesomeweather/search.dart';
-import 'package:awesomeweather/weatherEffects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_bg_null_safety/flutter_weather_bg.dart';
-import 'package:glassmorphism/glassmorphism.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'Bloc/weather_event.dart';
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
+  MyHomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +26,7 @@ class MyHomePage extends StatelessWidget {
           } else if (state is WeatherLoading) {
             return Loading();
           } else if (state is WeatherLoaded) {
-            return Awesome(
-              forecast: state.forecast,
-              location: state.location,
-            );
+            return Awesome(forecast: state.forecast, location: state.location);
           } else {
             return WeatherSearch();
           }
@@ -72,16 +68,23 @@ class WeatherSearch extends StatelessWidget {
               ),
               SizedBox(height: 40),
               TextField(
+                textAlign: TextAlign.center,
+                cursorColor: Colors.cyanAccent,
+                cursorRadius: Radius.circular(5),
+                cursorWidth: 4,
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 controller: text,
+                cursorHeight: 25,
                 onSubmitted: (text) =>
                     context.read<WeatherBloc>().add(GetWeather(text)),
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
@@ -106,9 +109,11 @@ class Loading extends StatelessWidget {
 }
 
 class Awesome extends StatelessWidget {
-  const Awesome({Key? key, required this.forecast, required this.location})
+  Awesome({Key? key, required this.forecast, required this.location})
       : super(key: key);
 
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   final Forecast forecast;
   final Location location;
 
@@ -117,7 +122,7 @@ class Awesome extends StatelessWidget {
     return Stack(
       children: [
         WeatherBg(
-          weatherType: WeatherType.cloudyNight,
+          weatherType: WeatherViewe.weatherType(forecast.hourly[0].weather[0]),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
         ),
@@ -140,11 +145,16 @@ class Awesome extends StatelessWidget {
                       splashColor: Colors.blue[200],
                       hoverColor: Colors.transparent,
                       onPressed: () async {
-                        String? city = await showSearch(
-                            context: context, delegate: Search());
-                        context
-                            .read<WeatherBloc>()
-                            .add(GetWeather(city ?? 'Delhi'));
+                        String city = await showSearch(
+                                // query: location.name,s
+                                context: context,
+                                delegate: Search2()) ??
+                            location.name;
+                        if (city.isEmpty || (location.name == city)) {
+                          return;
+                        }
+                        print(city);
+                        context.read<WeatherBloc>().add(GetWeather(city));
                       },
                       icon: Icon(Icons.search_rounded),
                     ),
@@ -153,75 +163,72 @@ class Awesome extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                padding:
-                    EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 50),
-                children: [
-                  CurrentWeather(
-                    forecast: forecast,
-                    location: location,
-                  ),
-                  Divider(
-                    color: Colors.white60,
-                    height: 10,
-                    thickness: 1,
-                  ),
-                  HourlyForecast(hourly: forecast.hourly),
-                  Divider(
-                    color: Colors.white60,
-                    height: 50,
-                    thickness: 1,
-                  ),
-                  DailyForecast(daily: forecast.daily),
-                  Divider(
-                    color: Colors.white60,
-                    height: 50,
-                    thickness: 1,
-                  ),
-                  Details(details: forecast)
-                ],
+              child: SmartRefresher(
+                controller: _refreshController,
+                onRefresh: () {
+                  context.read<WeatherBloc>().add(ResetWeather(location.name));
+                },
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
+                  padding:
+                      EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 50),
+                  children: [
+                    CurrentWeather(
+                      forecast: forecast,
+                      location: location,
+                    ),
+                    Divider(
+                      color: Colors.white60,
+                      height: 10,
+                      thickness: 1,
+                    ),
+                    HourlyForecast(hourly: forecast.hourly),
+                    Divider(
+                      color: Colors.white60,
+                      height: 50,
+                      thickness: 1,
+                    ),
+                    DailyForecast(daily: forecast.daily),
+                    Divider(
+                      color: Colors.white60,
+                      height: 50,
+                      thickness: 1,
+                    ),
+                    Details(details: forecast)
+                  ],
+                ),
               ),
             ),
-            GlassmorphicContainer(
-              linearGradient:
-                  LinearGradient(colors: [Colors.white30, Colors.white30]),
-              borderGradient:
-                  LinearGradient(colors: [Colors.white30, Colors.white30]),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              blur: 20,
-              borderRadius: 0,
-              border: 0,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Open Weather Map',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              'Updated 20/07 8:30 pm',
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Open Weather Map',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            'Updated 20/07 8:30 pm',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
                       ),
-                      SizedBox(width: 5),
-                      IconButton(
-                        color: Colors.white,
-                        onPressed: () => WeatherEffects("heavy-rain"),
-                        icon: Icon(Icons.refresh),
-                      )
-                    ],
-                  ),
+                    ),
+                    SizedBox(width: 5),
+                    IconButton(
+                      color: Colors.white,
+                      onPressed: () => context
+                          .read<WeatherBloc>()
+                          .add(ResetWeather(location.name)),
+                      icon: Icon(Icons.refresh),
+                    )
+                  ],
                 ),
               ),
             ),

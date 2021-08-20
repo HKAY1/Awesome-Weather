@@ -12,32 +12,33 @@ class HourlyForecast extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 15, bottom: 25),
+            margin: EdgeInsets.only(top: 25, bottom: 15),
             child: Text(
               'HOURLY',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 20),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
-            height: 140,
+            height: 180,
             child: ListView.separated(
               separatorBuilder: (context, index) => VerticalDivider(
-                color: Colors.white60,
+                color: Colors.transparent,
+                thickness: 25,
               ),
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(left: 10, right: 10),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: hourly.length,
+              itemCount: (hourly.length ~/ 4).toInt(),
               itemBuilder: (context, item) => Container(
-                margin: EdgeInsets.all(20),
+                margin: EdgeInsets.only(left: 20, right: 20),
                 width: MediaQuery.of(context).size.width * 0.12,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      getTime(timestamp: hourly[item].dt, format: 'hh:m a'),
+                      getTime(timestamp: hourly[item].dt, format: 'hh a'),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -47,15 +48,15 @@ class HourlyForecast extends StatelessWidget {
                     Icon(
                       Icons.cloud,
                       color: Colors.white,
-                      size: 20,
+                      size: 40,
                     ),
                     SizedBox(height: 20),
                     Text(
                       converter(hourly[item].temp),
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13),
                     )
                   ],
                 ),

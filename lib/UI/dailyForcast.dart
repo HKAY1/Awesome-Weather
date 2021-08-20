@@ -15,47 +15,48 @@ class DailyForecast extends StatelessWidget {
             margin: EdgeInsets.only(top: 15, bottom: 25),
             child: Text(
               'Daily',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 20),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
-            height: 140,
+            height: 180,
             child: ListView.separated(
               separatorBuilder: (context, index) => VerticalDivider(
-                color: Colors.white60,
+                color: Colors.transparent,
+                thickness: 25,
               ),
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(left: 10, right: 10),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: daily.length,
               itemBuilder: (context, item) => Container(
-                margin: EdgeInsets.all(20),
+                margin: EdgeInsets.only(left: 20, right: 20),
                 width: MediaQuery.of(context).size.width * 0.12,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       getDate(timestamp: daily[item].dt, format: 'EEE d'),
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13),
                     ),
                     SizedBox(height: 20),
                     Icon(
                       Icons.cloud,
                       color: Colors.white,
-                      size: 20,
+                      size: 40,
                     ),
                     SizedBox(height: 20),
                     Text(
                       converter(daily[item].temp.max),
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12),
                     )
                   ],
                 ),
