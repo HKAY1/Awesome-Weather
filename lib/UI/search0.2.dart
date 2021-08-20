@@ -103,6 +103,30 @@ class Search2 extends SearchDelegate<String> {
     }
   }
 
+  Widget recentCity(BuildContext context, String city) {
+    return GestureDetector(
+      onTap: () {
+        query = city;
+        close(context, query);
+      },
+      child: Container(
+        margin: EdgeInsets.all(8),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white24,
+        ),
+        child: Text(
+          city,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget buildPopularCities(BuildContext context, List<String> recents) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -126,6 +150,8 @@ class Search2 extends SearchDelegate<String> {
                   ),
                 ),
               ),
+              for (int i = cities.length, k = 0; i <= 0; --i)
+                for (int j = 0; j <= i; ++j) recentCity(context, cities[k++]),
               GestureDetector(
                 onTap: () {
                   query = recents[0];
