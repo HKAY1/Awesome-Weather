@@ -45,10 +45,10 @@ class DailyForecast extends StatelessWidget {
                           fontSize: 13),
                     ),
                     SizedBox(height: 20),
-                    Icon(
-                      Icons.cloud,
+                    ImageIcon(
+                      AssetImage('Assets/images/rain.png'),
                       color: Colors.white,
-                      size: 40,
+                      size: 60,
                     ),
                     SizedBox(height: 20),
                     Text(

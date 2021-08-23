@@ -46,14 +46,11 @@ class WeatherSearch extends StatelessWidget {
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blueAccent, Colors.purpleAccent],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Center(
-        child: Container(
+          image: DecorationImage(
+              image: AssetImage('Assets/images/weather.gif'),
+              fit: BoxFit.cover)),
+      child: Column(children: [
+        Container(
           padding: EdgeInsets.all(30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +63,7 @@ class WeatherSearch extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               TextField(
                 textAlign: TextAlign.center,
                 cursorColor: Colors.cyanAccent,
@@ -92,7 +89,7 @@ class WeatherSearch extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }
