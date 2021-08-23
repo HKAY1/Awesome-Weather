@@ -103,28 +103,31 @@ class Search2 extends SearchDelegate<String> {
     }
   }
 
-  Widget recentCity(BuildContext context, String city) {
-    return GestureDetector(
-      onTap: () {
-        query = city;
-        close(context, query);
-      },
-      child: Container(
-        margin: EdgeInsets.all(8),
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white24,
-        ),
-        child: Text(
-          city,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-          ),
-        ),
-      ),
-    );
+  List<Widget> recentCity(BuildContext context, List<String> city) {
+    int count = city.length;
+    return List<Widget>.generate(
+        count,
+        (i) => GestureDetector(
+              onTap: () {
+                query = city[i];
+                close(context, query);
+              },
+              child: Container(
+                margin: EdgeInsets.all(8),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white24,
+                ),
+                child: Text(
+                  city[i],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            )).toList();
   }
 
   Widget buildPopularCities(BuildContext context, List<String> recents) {
@@ -133,7 +136,7 @@ class Search2 extends SearchDelegate<String> {
       body: ListView(
         padding: EdgeInsets.only(top: 20, right: 5),
         children: [
-          Row(
+          Wrap(
             children: [
               Container(
                 margin: EdgeInsets.all(8),
@@ -150,247 +153,244 @@ class Search2 extends SearchDelegate<String> {
                   ),
                 ),
               ),
-              for (int i = cities.length, k = 0; i <= 0; --i)
-                for (int j = 0; j <= i; ++j) recentCity(context, cities[k++]),
-              GestureDetector(
-                onTap: () {
-                  query = recents[0];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[0],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[1];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[1],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[2];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[2],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[3];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[3],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  query = recents[4];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[4],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[5];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[5],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[6];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[6],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[7];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[7],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  query = recents[8];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[8],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[9];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[9],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  query = recents[10];
-                  close(context, query);
-                },
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white24,
-                  ),
-                  child: Text(
-                    recents[10],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              )
+              Wrap(children: recentCity(context, recents)),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[0];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[0],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[1];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[1],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[2];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[2],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[3];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[3],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         Row(
+              //           children: [
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[4];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[4],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[5];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[5],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[6];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[6],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[7];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[7],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         Row(
+              //           children: [
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[8];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[8],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[9];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[9],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             GestureDetector(
+              //               onTap: () {
+              //                 query = recents[10];
+              //                 close(context, query);
+              //               },
+              //               child: Container(
+              //                 margin: EdgeInsets.all(8),
+              //                 padding: EdgeInsets.all(10),
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(20),
+              //                   color: Colors.white24,
+              //                 ),
+              //                 child: Text(
+              //                   recents[10],
+              //                   style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 10,
+              //                   ),
+              //                 ),
             ],
           )
         ],
