@@ -143,9 +143,7 @@ class Awesome extends StatelessWidget {
                       hoverColor: Colors.transparent,
                       onPressed: () async {
                         String city = await showSearch(
-                                // query: location.name,s
-                                context: context,
-                                delegate: Search2()) ??
+                                context: context, delegate: Search2()) ??
                             location.name;
                         if (city.isEmpty || (location.name == city)) {
                           return;
