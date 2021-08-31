@@ -4,7 +4,6 @@ import 'package:awesomeweather/UI/Details.dart';
 import 'package:awesomeweather/UI/currentWeather.dart';
 import 'package:awesomeweather/UI/dailyForcast.dart';
 import 'package:awesomeweather/UI/hourlyForcast.dart';
-import 'package:awesomeweather/UI/search0.2.dart';
 import 'package:awesomeweather/UI/weather_viewer.dart';
 import 'package:awesomeweather/WeatherModals/forcast.dart';
 import 'package:awesomeweather/WeatherModals/locations.dart';
@@ -141,15 +140,8 @@ class Awesome extends StatelessWidget {
                       focusColor: Colors.transparent,
                       splashColor: Colors.blue[200],
                       hoverColor: Colors.transparent,
-                      onPressed: () async {
-                        String city = await showSearch(
-                                context: context, delegate: Search2()) ??
-                            location.name;
-                        if (city.isEmpty || (location.name == city)) {
-                          return;
-                        }
-                        print(city);
-                        context.read<WeatherBloc>().add(GetWeather(city));
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/search');
                       },
                       icon: Icon(Icons.search_rounded),
                     ),
