@@ -38,7 +38,6 @@ class MyHomePage extends StatelessWidget {
 class WeatherSearch extends StatelessWidget {
   WeatherSearch({Key? key}) : super(key: key);
   final TextEditingController text = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Container(

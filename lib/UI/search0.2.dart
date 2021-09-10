@@ -195,36 +195,4 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-
-  Widget buildSuggestionsSuccess(List<String>? suggestions) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: ListView.builder(
-          padding: EdgeInsets.all(10),
-          itemCount: suggestions!.length,
-          itemBuilder: (context, index) {
-            final suggestion = suggestions[index];
-            return GestureDetector(
-              onTap: () {
-                query.text = suggestion;
-                close(context, query);
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                margin: EdgeInsets.all(10),
-                color: Colors.blueGrey[900],
-                child: Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 10, left: 30),
-                  child: Text(
-                    suggestion.toString(),
-                    style: TextStyle(color: Colors.blue, fontSize: 20),
-                  ),
-                ),
-              ),
-            );
-          }),
-    );
-  }
 }

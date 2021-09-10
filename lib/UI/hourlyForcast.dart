@@ -45,10 +45,11 @@ class HourlyForecast extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Icon(
-                      Icons.cloud,
+                    ImageIcon(
+                      AssetImage(
+                          'Assets/images/${hourly[item].weather[0].icon}.png'),
                       color: Colors.white,
-                      size: 40,
+                      size: 60,
                     ),
                     SizedBox(height: 20),
                     Text(
