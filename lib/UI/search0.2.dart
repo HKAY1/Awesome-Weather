@@ -50,6 +50,9 @@ class _SearchPageState extends State<SearchPage> {
   List<String> cities = [''];
   final TextEditingController query = TextEditingController();
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.blueAccent),
         elevation: 0,
         leading: IconButton(
@@ -141,33 +144,6 @@ class _SearchPageState extends State<SearchPage> {
         (i) => GestureDetector(
               onTap: () {
                 query.text = city[i];
-                close(context, query);
-              },
-              child: Container(
-                margin: EdgeInsets.all(8),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white24,
-                ),
-                child: Text(
-                  city[i],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                  ),
-                ),
-              ),
-            )).toList();
-  }
-
-  List<Widget> recentCity(BuildContext context, List<String> city) {
-    int count = city.length;
-    return List<Widget>.generate(
-        count,
-        (i) => GestureDetector(
-              onTap: () {
-                query = city[i];
                 close(context, query);
               },
               child: Container(
