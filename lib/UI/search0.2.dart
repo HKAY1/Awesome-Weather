@@ -115,6 +115,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+
   close(BuildContext context, TextEditingController query) {
     context.read<WeatherBloc>().add(GetWeather(query.text));
     Navigator.of(context).pop();
