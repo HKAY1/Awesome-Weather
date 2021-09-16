@@ -46,7 +46,8 @@ class DailyForecast extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     ImageIcon(
-                      AssetImage('Assets/images/rain.png'),
+                      AssetImage(
+                          'Assets/images/${daily[item].weather[0].icon}.png'),
                       color: Colors.white,
                       size: 60,
                     ),

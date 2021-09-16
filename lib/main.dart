@@ -1,4 +1,5 @@
 import 'package:awesomeweather/Bloc/weather_bloc.dart';
+import 'package:awesomeweather/UI/search0.2.dart';
 import 'package:awesomeweather/weatherRepo.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Awesome Weather',
             home: MyHomePage(),
+            routes: {
+              '/search': (context) => SearchPage(),
+            },
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
                 primarySwatch: Colors.blue,
