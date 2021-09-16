@@ -1,13 +1,9 @@
-
 import 'package:awesomeweather/weatherRepo.dart';
-import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:awesomeweather/Bloc/weather_bloc.dart';
 import 'package:awesomeweather/Bloc/weather_event.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-]
 class SearchPage extends StatefulWidget {
   SearchPage({Key? key}) : super(key: key);
 
@@ -16,7 +12,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-
   final popularCities = [
     'Delhi',
     'Mumbai',
@@ -88,7 +83,6 @@ class _SearchPageState extends State<SearchPage> {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
-
               ),
             ),
           ),
