@@ -128,17 +128,21 @@ class Daily {
     required this.temp,
     required this.windSpeed,
     required this.windDeg,
+    required this.weather,
   });
   final int dt;
   final Temp temp;
   final double windSpeed;
   final int windDeg;
+  final List<Weather> weather;
 
   factory Daily.fromJson(Map<String, dynamic> json) => Daily(
         dt: json["dt"],
         temp: Temp.fromJson(json["temp"]),
         windSpeed: json["wind_speed"].toDouble(),
         windDeg: json["wind_deg"],
+        weather:
+            List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -146,6 +150,7 @@ class Daily {
         "temp": temp.toJson(),
         "wind_speed": windSpeed,
         "wind_deg": windDeg,
+        "weather": List<dynamic>.from(weather.map((x) => x.toJson())),
       };
 }
 
