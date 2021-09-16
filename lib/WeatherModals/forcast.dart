@@ -135,7 +135,6 @@ class Daily {
   final double windSpeed;
   final int windDeg;
   final List<Weather> weather;
-
   factory Daily.fromJson(Map<String, dynamic> json) => Daily(
         dt: json["dt"],
         temp: Temp.fromJson(json["temp"]),

@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
             routes: {
               '/search': (context) => SearchPage(),
             },
+
             onGenerateRoute: (route) {
               if (route.name == "/someRoute") {
                 return PageRouteBuilder(
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
                         ScaleTransition(scale: a, child: c));
               }
             },
+
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
                 primarySwatch: Colors.blue,
